@@ -1,0 +1,409 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /api/jobs:
+    get:
+      operationId: listJobs
+      description: 'This view returns all created jobs via a GET request.
+
+        The JobListSerializer is used to serialize the objects.'
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobList'
+          description: ''
+      tags:
+      - api
+  /api/job_detail/{id}:
+    get:
+      operationId: retrieveJob
+      description: "Unlike JobList, here for a given job (defined by its id) all \n\
+        associated models are returned. \nThe JobSerializer is used for this purpose."
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this job.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: ''
+      tags:
+      - api
+  /data/panel_images/{image_path}:
+    get:
+      operationId: retrievepanel_image
+      description: 'Save method for the panel images.
+
+        Wrapper function'
+      parameters:
+      - name: image_path
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - data
+  /data/cropped_panel_images/{image_path}:
+    get:
+      operationId: retrievecropped_panel_image
+      description: 'Save method for the panel images.
+
+        Wrapper function'
+      parameters:
+      - name: image_path
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - data
+  /data/component_errors/{image_path}:
+    get:
+      operationId: retrievecomponent_error
+      description: 'Save method for the panel images.
+
+        Wrapper function'
+      parameters:
+      - name: image_path
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - data
+  /api/error_list:
+    get:
+      operationId: listErrors
+      description: "Give back all errors in one list, \nbut filtered out the False\
+        \ Positives."
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+          description: ''
+      tags:
+      - api
+  /api/createjob:
+    post:
+      operationId: createJobCreate
+      description: "This view is used for the creation of a job \nand at the same\
+        \ time the panels are saved. \nThe JobCreateSerializer is used for this purpose.\n\
+        Also in the create function the error detection \npipline gets called as a\
+        \ thread."
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/JobCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/JobCreate'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobCreate'
+          description: ''
+      tags:
+      - api
+  /api/error_update/{id}:
+    put:
+      operationId: updateError
+      description: 'This class updates the state of the errors boolean value
+
+        to show if its a false positive or true positive.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this error.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ErrorUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ErrorUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ErrorUpdate'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUpdate'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateError
+      description: 'This class updates the state of the errors boolean value
+
+        to show if its a false positive or true positive.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this error.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ErrorUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ErrorUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ErrorUpdate'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUpdate'
+          description: ''
+      tags:
+      - api
+  /api/job_delete/{id}:
+    delete:
+      operationId: destroyJob
+      description: 'For a given Job id the job gets deleted and all
+
+        its child elements on the database which means errors etc.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this job.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+components:
+  schemas:
+    JobList:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        job_state:
+          enum:
+          - PROCESSING
+          - FAILED
+          - COMPLETED
+          type: string
+        name:
+          type: string
+          maxLength: 50
+        config:
+          type: string
+          format: binary
+        position:
+          type: string
+          format: binary
+      required:
+      - name
+      - config
+      - position
+    Job:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        panels:
+          type: array
+          items:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      readOnly: true
+                    designator:
+                      type: string
+                      maxLength: 50
+                    rework:
+                      type: boolean
+                    coordinate_x:
+                      type: integer
+                      nullable: true
+                    coordinate_y:
+                      type: integer
+                      nullable: true
+                    component_image:
+                      type: string
+                      format: binary
+                    component_value:
+                      type: string
+                      nullable: true
+                      maxLength: 150
+                    board_id:
+                      type: integer
+                    panel_id:
+                      type: integer
+                  required:
+                  - designator
+                  - component_image
+                  - board_id
+                  - panel_id
+                readOnly: true
+              panel_photo:
+                type: string
+                format: binary
+              cropped_panel_photo:
+                type: string
+                format: binary
+                nullable: true
+              id:
+                type: integer
+                readOnly: true
+            required:
+            - panel_photo
+          readOnly: true
+        job_state:
+          enum:
+          - PROCESSING
+          - FAILED
+          - COMPLETED
+          type: string
+        name:
+          type: string
+          maxLength: 50
+        config:
+          type: string
+          format: binary
+        position:
+          type: string
+          format: binary
+      required:
+      - name
+      - config
+      - position
+    Error:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        designator:
+          type: string
+          maxLength: 50
+        rework:
+          type: boolean
+        coordinate_x:
+          type: integer
+          nullable: true
+        coordinate_y:
+          type: integer
+          nullable: true
+        component_image:
+          type: string
+          format: binary
+        component_value:
+          type: string
+          nullable: true
+          maxLength: 150
+        board_id:
+          type: integer
+        panel_id:
+          type: integer
+      required:
+      - designator
+      - component_image
+      - board_id
+      - panel_id
+    JobCreate:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        config:
+          type: string
+          format: binary
+        position:
+          type: string
+          format: binary
+        panels:
+          type: array
+          items:
+            type: object
+            properties:
+              panel_photo:
+                type: string
+                format: binary
+            required:
+            - panel_photo
+      required:
+      - name
+      - config
+      - position
+      - panels
+    ErrorUpdate:
+      type: object
+      properties:
+        rework:
+          type: boolean

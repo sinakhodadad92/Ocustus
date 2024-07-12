@@ -1,0 +1,102 @@
+#create-job {
+  width: 600px;
+}
+
+#job-name{
+  min-height: 30px;
+  min-width: 340px;
+  border-color: orange;
+}
+
+#header {
+ min-height: 75px;
+}
+
+.title {
+  min-width: 100px;
+}
+
+.float-child-element {
+    float: left;
+}
+
+.create-job-text {
+  margin-top: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
+  min-height: 30px;
+}
+
+.example-container .mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
+
+.main-div{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-message {
+  color: red
+}
+
+.content{
+margin-top: 30px;
+}
+
+.action-button{
+  display: none;
+}
+
+.configurations-button{
+  min-height: 60px;
+}
+
+.csv-button{
+  min-height: 60px;
+}
+
+.header{
+  min-height: 55px;
+}
+
+.upload-images-button{
+min-height: 60px;
+}
+
+.upload-images-button{
+text-align: center;
+}
+
+.upload-button{
+  text-align: center;
+}
+
+.file-select-button {
+  min-width: 100%;
+}
+
+.image-preview{
+  position: relative;
+  margin-top: 15px;
+  min-height: 250px;
+  min-width: 100px;
+  border: 0.5px solid #00000057;
+}
+
+.image-text-position {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.image-text {
+  font-weight: 500;
+}
+
+.virtual-scrolling{
+  height: 250px;
+}

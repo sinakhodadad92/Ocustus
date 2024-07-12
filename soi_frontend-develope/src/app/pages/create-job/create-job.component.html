@@ -1,0 +1,88 @@
+<div>    
+    <mat-card id="create-job">
+        <form [formGroup]="jobForm">
+            <mat-card-header class="header">
+                <mat-card-title class="title">
+                    <button mat-mini-fab class="float-child-element" color="orange" [routerLink]="['']" aria-label="Example icon button with a menu icon">
+                        <mat-icon>arrow_left_alt</mat-icon>
+                    </button>
+                    <div class="float-child-element create-job-text">
+                        Create Job
+                    </div>
+                </mat-card-title>
+
+                <div>
+                    <input id="job-name" class="form-control" formControlName="jobName" placeholder="Job Name">
+                    <div class="error-message" *ngIf="(jobForm.controls.jobName?.touched || submitClicked) && jobForm.controls.jobName.invalid">
+                        <span *ngIf="jobForm.controls.jobName.errors?.required">This field is mandatory.</span>
+                        <span *ngIf="jobForm.controls.jobName.errors?.pattern">Only letters, numbers and spaces allowed</span>  
+                    </div>
+                </div>
+            </mat-card-header>
+
+
+            <mat-card-content class="content">
+                <div class="configurations-button">
+                    <input type="file" id="config" (change)="processConfigFile($event)" class="action-button" #configButton/>
+                    <button (click)="configButton.click()" class="file-select-button" mat-raised-button color="orange">
+                        <i *ngIf="jobForm.controls.configurations.invalid" class="material-icons left">cloud_upload</i>
+                        <i *ngIf="jobForm.controls.configurations.valid" class="material-icons left">cloud_done</i>
+                        Select Panel Configurations
+                    </button>
+                    <div class="error-message"  *ngIf="(jobForm.controls.configurations?.touched || submitClicked) && jobForm.controls.configurations.invalid">
+                        <span *ngIf="jobForm.controls.configurations.errors?.required">This field is mandatory</span>
+                    </div>
+                 </div>
+
+                <div class="csv-button">
+                    <input type="file" id="csv" (change)="processCsv($event)" class="action-button" #csvButton/>
+                    <button (click)="csvButton.click()" class="file-select-button" mat-raised-button color="orange">
+                        <i *ngIf="jobForm.controls.csv.invalid" class="material-icons left">cloud_upload</i>
+                        <i *ngIf="jobForm.controls.csv.valid" class="material-icons left">cloud_done</i>
+                        Upload Position CSV
+                    </button>
+                    <div class="error-message"  *ngIf="(jobForm.controls.csv?.touched || submitClicked) && jobForm.controls.csv.invalid">
+                        <span *ngIf="jobForm.controls.csv.errors?.required">This field is mandatory</span>
+                    </div>
+                </div>
+
+                <div class="upload-images-button">
+                    <input type="file" multiple="multiple" id="images"
+                    accept="image/*"
+                    (change)="processImageFiles($event)" class="action-button" #imagesButton/>
+                    <button (click)="imagesButton.click()" class="file-select-button" mat-raised-button color="orange">
+                        <i *ngIf="jobForm.controls.images.invalid" class="material-icons left">cloud_upload</i>
+                        <i *ngIf="jobForm.controls.images.valid" class="material-icons left">cloud_done</i>
+                        Upload Panel Images
+                    </button>
+                    <div class="error-message"  *ngIf="(jobForm.controls.images?.touched || submitClicked) && jobForm.controls.images.invalid">
+                        <span *ngIf="jobForm.controls.images.errors?.required">This field is mandatory</span>
+                    </div>
+                </div>
+
+
+                <div class="image-preview">
+                    <div class="image-text-position" *ngIf="jobForm.controls.images.invalid">
+                        <span class="image-text">
+                            No Images uploaded yet :(
+                        </span>
+                    </div>
+
+                    <div *ngIf="jobForm.controls.images.valid">
+                        <cdk-virtual-scroll-viewport class="virtual-scrolling" itemSize="100">
+                            <div *cdkVirtualFor='let url of images' >
+                                <img  [src]="url.image" height="150" width="200px" style="margin: 3px;">
+                                {{url.imageName}}
+                            </div>
+                            <br/>
+                        </cdk-virtual-scroll-viewport>
+                    </div>
+                </div>
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <div style="text-align: center; margin-top: 32px">
+                <button mat-raised-button color="orange" type="submit" (click)="submitJob()" >Create Job</button>
+            </div>
+        </form>
+    </mat-card>
+</div>

@@ -1,0 +1,39 @@
+
+.example-container {
+  width: 500px;
+  height: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+      
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  }
+      
+.example-sidenav {
+  padding: 20px;
+}
+
+.first-icon {
+  float: left;
+  position: relative;
+  margin-right: 12px;
+  width: 40px;
+  border-right: 1px solid rgb(177, 177, 177);
+}
+      
+.chevron-icon {
+  float: right; 
+  position: relative
+}
+
+.delete-button {
+  float: right; 
+  position: relative
+}
+
+.padding {
+  padding-top: 10px;
+}

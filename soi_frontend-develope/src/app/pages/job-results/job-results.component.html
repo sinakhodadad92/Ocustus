@@ -1,0 +1,88 @@
+<mat-card *ngIf="currentJob" style="text-align: center; width: 800px">
+  <div>
+    <div style="float: left">
+      <button
+        [hidden]="true"
+        (click)="prevStep()"
+        mat-raised-button
+        color="orange"
+      >
+        Prev
+      </button>
+    </div>
+    <div style="float: right">
+      <button
+        [hidden]="true"
+        (click)="nextStep()"
+        mat-raised-button
+        color="orange"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+  <button
+    mat-mini-fab
+    style="float: left"
+    color="orange"
+    [routerLink]="['']"
+    aria-label="Example icon button with a menu icon"
+  >
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  <h3 style="margin-bottom: 10px">Jobname: {{ currentJob.name }}</h3>
+  <mat-divider></mat-divider>
+
+  <mat-list>
+    <mat-grid-list cols="3" rowHeight="100px">
+      <mat-grid-tile>
+        <h5>Pictures</h5>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div>
+          <h5>Description</h5>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <h5>Rework?</h5>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <ng-container *ngFor="let panel of this.currentJob.panels">
+      <mat-grid-list
+        cols="3"
+        rowHeight="180px"
+        *ngFor="let comp of panel.errors"
+      >
+        <mat-grid-tile>
+          <img
+            src="{{ comp.component_image }}"
+            style="width: 50%; height: auto"
+        /></mat-grid-tile>
+        <mat-grid-tile
+          ><div>
+            <p>Designator: {{ comp.designator }}</p>
+            <p>Component: {{ comp.component_value }}</p>
+          </div></mat-grid-tile
+        >
+        <mat-grid-tile>
+          <mat-slide-toggle
+            [(ngModel)]="comp.rework"
+            name="enableFP"
+            (change)="changed(comp)"
+          ></mat-slide-toggle>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </ng-container>
+  </mat-list>
+
+  <mat-divider inset></mat-divider>
+  <button
+    mat-raised-button
+    style="margin-top: 20px"
+    color="orange"
+    [routerLink]="['/report', currentJob.id]"
+  >
+    Report
+  </button>
+</mat-card>

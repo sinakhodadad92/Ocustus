@@ -1,0 +1,67 @@
+<mat-card style="text-align: left; width: 600px">
+  <div>
+    <mat-card-title>Jobs Overview</mat-card-title>
+  </div>
+  <mat-card-actions>
+    <mat-selection-list #this.jobs [multiple]="false">
+      <div class="options">
+
+
+        <!-- [routerLink]="job.job_state == 'COMPLETED' ? ['/jobresult', job.id] : null" -->
+
+        <mat-list-option
+        class="info-options"
+        *ngFor="let job of this.jobs"
+     
+        [value]="job.id"
+        (click)="listItemClicked(job.job_state, job.id)">
+        <div class="row">
+          <div class="col-10 padding">
+            <mat-icon
+            matSuffix
+            matTooltip="{{this.getIconMessage(job.job_state)}}"
+            class="first-icon">
+            {{ this.getIcon(job.job_state)}}
+            </mat-icon>
+            <span>
+              {{ job.name }}
+            </span>
+          </div>
+                  
+          <div class="col-1 padding">
+            <mat-icon
+            *ngIf="job.job_state == 'COMPLETED'"
+            matSuffix
+            class="">
+            chevron_right
+          </mat-icon>
+          </div>
+
+          <div class="col-1">
+           <button  class="" mat-icon-button (click)="deleteJob(job.id, job.name)">
+            <mat-icon>delete</mat-icon>
+           </button>
+          </div>
+         
+        </div>
+
+      </mat-list-option>
+
+
+      </div>
+      
+
+
+    </mat-selection-list>
+
+  </mat-card-actions>
+  <mat-divider></mat-divider>
+  <mat-card-actions style="text-align: center">
+    <button mat-raised-button color="orange" [routerLink]="['createJob']">
+      Add new Job
+    </button>
+    <button mat-raised-button color="orange" (click)="reload()">
+      Refresh status
+    </button>
+  </mat-card-actions>
+</mat-card>

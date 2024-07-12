@@ -1,0 +1,54 @@
+<mat-card id="curr-job" *ngIf="currentJob">
+  <div id="print-section">
+    <button
+      mat-mini-fab
+      style="float: left"
+      color="orange"
+      class="do-not-print"
+      (click)="backClicked()"
+      aria-label="Example icon button with a menu icon"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <h3 id="job-name">Jobname: {{ currentJob.name }}</h3>
+    <div *ngFor="let panel of errorPanels; let i = index">
+      <mat-divider></mat-divider>
+
+      <p id="panel-num">Panel {{ panel.panel_number }}</p>
+
+      <panel-canvas-component [panel]="panel" [width]="900">
+      </panel-canvas-component>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Number</th>
+            <th>Designator</th>
+            <th>Value</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let error of panel.errors; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ error.designator }}</td>
+            <td>{{ error.component_value }}</td>
+            <td><mat-icon>check_box_outline_blank</mat-icon></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <mat-divider inset></mat-divider>
+
+  <button
+    mat-raised-button
+    id="print-button"
+    class="do-not-print"
+    color="orange"
+    (click)="printReport()"
+  >
+    Print Report
+  </button>
+</mat-card>

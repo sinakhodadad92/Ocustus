@@ -1,0 +1,14 @@
+.delete-dialog-action-buttons {
+    margin-top: 10px;
+    display: flex;
+  }
+
+  .delete-dialog-button-div {
+    display: flex;
+    height: 50px;
+    width: 40%;
+  }
+
+  .mat-dialog-content {
+    overflow-y: hidden !important;
+}

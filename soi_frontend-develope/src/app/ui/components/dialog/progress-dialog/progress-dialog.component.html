@@ -1,0 +1,16 @@
+<div>
+  <div class="dialog-heading">{{data.title}}</div>
+  <div>
+    <div class="dialog-content">
+      <div class="dialog-icon-container">
+        <img src="../../../../../assets/progress_dialog.jpg" class="big-icon">
+      </div>
+      <div class="dialog-content-text">{{data.content}}</div>
+    </div>
+    <div class="dialog-action-buttons">
+      <div class="dialog-button-div">
+        <button class="action-button" cdkFocusInitial tabindex="-1" (click)="onEnter()">{{data.okButton}}</button>
+      </div>
+    </div>
+  </div>
+</div>

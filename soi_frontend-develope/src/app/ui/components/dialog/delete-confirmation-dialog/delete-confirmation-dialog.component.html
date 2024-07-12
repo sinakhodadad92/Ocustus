@@ -1,0 +1,21 @@
+<div>
+    <div class="dialog-heading">Deleting Job "{{data.name}}"?</div>
+    <div>
+      <div class="dialog-content">
+        <div class="dialog-icon-container">
+          <img src="../../../../../assets/delete_icon.png" class="big-icon">
+        </div>
+        <div class="dialog-content-text">Are you sure you want to delete? This action is permenant and can not be reveresed.</div>
+      </div>
+      <div class="delete-dialog-action-buttons row">
+        <div class="delete-dialog-button-div col-5">
+          <button class="action-button" cdkFocusInitial tabindex="-1" (click)="onClose(false)">{{data.cancelButton}}</button>
+        </div>
+
+        <div class="col-2"></div>
+        <div class="delete-dialog-button-div col-5">
+            <button class="action-button" cdkFocusInitial tabindex="-1" (click)="onClose(true)">{{data.okButton}}</button>
+          </div>
+      </div>
+    </div>
+</div>
